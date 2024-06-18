@@ -1,0 +1,16 @@
+nombre,pos_x,pos_y,ancho,alto,imagen_path,generacion,dificultad
+bulbasaur,325,450,300,300,Recursos/bulbasaur.png,1,fácil
+charmander,325,450,300,300,Recursos/charmander.png,1,fácil
+squirtle,325,450,300,300,Recursos/squirtle.png,1,fácil
+pikachu,325,450,300,300,Recursos/pikachu.png,1,fácil
+jigglypuff,325,450,300,300,Recursos/jigglypuff.png,1,medio
+meowth,325,450,300,300,Recursos/meowth.png,1,medio
+psyduck,325,450,300,300,Recursos/psyduck.png,1,medio
+machop,325,450,300,300,Recursos/machop.png,1,medio
+geodude,325,450,300,300,Recursos/geodude.png,1,medio
+magnemite,325,450,300,300,Recursos/magnemite.png,1,difícil
+muk,325,450,300,300,Recursos/muk.png,1,difícil
+voltorb,325,450,300,300,Recursos/voltorb.png,1,difícil
+hitmonlee,325,450,300,300,Recursos/hitmonlee.png,1,difícil
+staryu,325,450,300,300,Recursos/staryu.png,1,difícil
+eevee,325,450,300,300,Recursos/eevee.png,1,difícil
