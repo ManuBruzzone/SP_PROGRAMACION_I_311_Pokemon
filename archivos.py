@@ -13,10 +13,10 @@ def cargar_lista_pokemons(path):
             origen = (int(lectura[1]), int(lectura[2]))
             dimensiones = (int(lectura[3]), int(lectura[4]))
             imagen = lectura[5]
-            generacion = int(lectura[6])
-            dificultad = lectura[7]
+            audio = lectura[6]
+            generacion = int(lectura[7])
 
-            pokemon = Pokemon(nombre, origen, dimensiones, imagen, generacion, dificultad)
+            pokemon = Pokemon(nombre, origen, dimensiones, imagen, audio, generacion)
 
             lista.append(pokemon)
 
