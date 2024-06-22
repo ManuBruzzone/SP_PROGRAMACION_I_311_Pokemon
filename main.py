@@ -32,7 +32,7 @@ pygame.display.set_icon(icono)
 ventana.fill(AZUL_CLARO)
 
 # Fuentes
-fuente = pygame.font.SysFont('Arial', 20)
+fuente = pygame.font.SysFont('consolas', 20)
 fuente_titulo = pygame.font.SysFont('Arial', 40)
 
 # Input
@@ -40,8 +40,10 @@ input_rect = pygame.Rect(0, 0, 200, 32)
 input_rect.center = (ANCHO_VENTANA // 2, ALTO_VENTANA // 2 + 5)
 texto = ''
 
-# Texto superior
+# Textos
 texto_superior = fuente_titulo.render("Who's That Pokemon?", True, BLANCO)
+texto_generaciones = fuente.render('Generation', True, NEGRO)
+texto_dificultad = fuente.render('Difficulty', True, NEGRO)
 
 # Ruta y configuración de la animación
 ruta_frames = 'Recursos/frames-gif'
@@ -49,7 +51,9 @@ animacion = Animacion(ruta_frames, 3000)
 
 # Botones
 botones_generaciones = Botones()
-botones_generaciones.crear_botones_generaciones()
+botones_dificultad = Botones()
+botones_generaciones.crear_botones(75,45,3,3,(50,720),1)
+botones_dificultad.crear_botones(75,45,3,1,(300,720),1)
 
 # Seleccionar Pokémon inicial
 pokemon_actual = random.choice(lista_pokemons)
@@ -119,7 +123,8 @@ while flag:
 
     ventana.fill(AZUL_CLARO)
 
-    botones_generaciones.dibujar_botones(ventana)
+    botones_generaciones.dibujar_botones(ventana,NEGRO,fuente)
+    botones_dificultad.dibujar_botones(ventana,NEGRO,fuente)
     pokemon_actual.dibujar(ventana, mostrar_silueta)
 
     pygame.draw.rect(ventana, BLANCO, input_rect)
@@ -127,7 +132,10 @@ while flag:
     superficie_texto = fuente.render(texto, True, NEGRO)
     ventana.blit(superficie_texto, (input_rect.x + 5, input_rect.y + (input_rect.height - superficie_texto.get_height()) // 2))
     ventana.blit(texto_superior, (ANCHO_VENTANA // 2 - texto_superior.get_width() // 2, 50))
+    ventana.blit(texto_generaciones, (49,695))
+    ventana.blit(texto_dificultad, (350,695))
     ventana.blit(nombre_pokemon, (50,50))
+    
 
     animacion.actualizar(tiempo_actual)
     animacion.dibujar(ventana, (input_rect.right + 50, input_rect.y + (input_rect.height - 90) // 2))
