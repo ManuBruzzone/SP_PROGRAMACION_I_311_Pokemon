@@ -10,13 +10,27 @@ class Pokemon:
         self.generacion = generacion
         self.audio = audio
 
-    def dibujar(self, pantalla, mostrar_silueta):
-        if mostrar_silueta:
-            silueta = self.imagen.copy()
-            silueta.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
-            pantalla.blit(silueta, self.rectangulo)
-        else:
+
+    def dibujar(self, pantalla, mostrar_silueta, dificultad):
+        silueta = self.imagen.copy()
+        silueta.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
+
+        if dificultad == ['Easy']:
             pantalla.blit(self.imagen, self.rectangulo)
+        elif dificultad == ['Hard']:
+            silueta_pixelada = pygame.transform.scale(silueta, (silueta.get_width() // 10, silueta.get_height() // 10))
+            silueta_pixelada = pygame.transform.scale(silueta_pixelada, silueta.get_size())
+            if mostrar_silueta:
+                pantalla.blit(silueta_pixelada, self.rectangulo)
+                pantalla.blit(silueta_pixelada, self.rectangulo)
+            else:
+                pantalla.blit(self.imagen, self.rectangulo)
+        else:
+            if mostrar_silueta:
+                pantalla.blit(silueta, self.rectangulo)
+            else:
+                pantalla.blit(self.imagen, self.rectangulo)
+
 
     def filtrar_pokemons(self, lista_pokemons, generaciones):
         pokemons_filtrados = []

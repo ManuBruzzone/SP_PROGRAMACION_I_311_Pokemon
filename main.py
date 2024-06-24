@@ -52,8 +52,8 @@ animacion = Animacion(ruta_frames, 3000)
 # Botones
 botones_generaciones = Botones()
 botones_dificultad = Botones()
-botones_generaciones.crear_botones(75,45,3,3,(50,720),1)
-botones_dificultad.crear_botones(75,45,3,1,(300,720),1)
+botones_generaciones.crear_botones_generacion(75, 45, 3, 3, (50, 720), 1)
+botones_dificultad.crear_botones_dificultad(110, 45, 3, 1, (500, 720), 1)
 
 # Seleccionar Pokémon inicial
 pokemon_actual = random.choice(lista_pokemons)
@@ -98,6 +98,7 @@ while flag:
 
             pos = evento.pos
             botones_generaciones.actualizar_color_boton(pos)
+            botones_dificultad.actualizar_color_boton(pos)
             aplicar_filtro = True
 
     if siguiente:
@@ -111,31 +112,32 @@ while flag:
         mostrar_silueta = True
         siguiente = False
 
-
     if not mostrar_silueta and tiempo_actual - animacion.tiempo_inicial >= animacion.tiempo_maximo:
         pokemon_actual = random.choice(lista_pokemons)
         mostrar_silueta = True 
         animacion.tiempo_inicial = 0
         siguiente = True
 
-
     generaciones_seleccionadas = botones_generaciones.obtener_generaciones_seleccionadas()
 
     ventana.fill(AZUL_CLARO)
 
-    botones_generaciones.dibujar_botones(ventana,NEGRO,fuente)
-    botones_dificultad.dibujar_botones(ventana,NEGRO,fuente)
-    pokemon_actual.dibujar(ventana, mostrar_silueta)
+    botones_generaciones.dibujar_botones_generacion(ventana, NEGRO, fuente)
+    botones_dificultad.dibujar_botones_dificultad(ventana, NEGRO, fuente)
+    dificultad_seleccionada = botones_dificultad.obtener_dificutlad_seleccioanda()
+    
+    pokemon_actual.dibujar(ventana, mostrar_silueta, dificultad_seleccionada)
 
     pygame.draw.rect(ventana, BLANCO, input_rect)
-    nombre_pokemon = fuente.render(f'{pokemon_actual.nombre} {pokemon_actual.generacion}',True,NEGRO)
     superficie_texto = fuente.render(texto, True, NEGRO)
     ventana.blit(superficie_texto, (input_rect.x + 5, input_rect.y + (input_rect.height - superficie_texto.get_height()) // 2))
     ventana.blit(texto_superior, (ANCHO_VENTANA // 2 - texto_superior.get_width() // 2, 50))
-    ventana.blit(texto_generaciones, (49,695))
-    ventana.blit(texto_dificultad, (350,695))
-    ventana.blit(nombre_pokemon, (50,50))
-    
+    ventana.blit(texto_generaciones, (110, 690))
+    ventana.blit(texto_dificultad, (498, 690))
+
+
+    nombre_pokemon = fuente.render(f'{pokemon_actual.nombre} {pokemon_actual.generacion}', True, NEGRO)
+    ventana.blit(nombre_pokemon, (50, 50))
 
     animacion.actualizar(tiempo_actual)
     animacion.dibujar(ventana, (input_rect.right + 50, input_rect.y + (input_rect.height - 90) // 2))
