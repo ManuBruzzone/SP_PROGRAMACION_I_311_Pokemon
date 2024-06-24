@@ -23,6 +23,7 @@ pygame.init()
 
 # Cargar la lista de Pokemons
 lista_pokemons = cargar_lista_pokemons('pokemons.csv')
+lista_nombre = cargar_nombre_pokemons('pokemon_names_multilang.csv')
 
 # Configurar la ventana
 ventana = pygame.display.set_mode(TAMANO_VENTANA)
@@ -30,6 +31,16 @@ pygame.display.set_caption("Who's That Pokemon?")
 icono = pygame.image.load('Recursos\Icono\Pokeball.png')
 pygame.display.set_icon(icono)
 ventana.fill(AZUL_CLARO)
+
+# Banderas
+reino_unido = pygame.image.load(r'Recursos\Banderas\Reino_Unido.png')
+reino_unido = pygame.transform.scale(reino_unido, (25,25))
+francia = pygame.image.load(r'Recursos\Banderas\Francia.png')
+francia = pygame.transform.scale(francia, (25,25))
+italia = pygame.image.load(r'Recursos\Banderas\Italia.png')
+italia = pygame.transform.scale(italia, (25,25))
+alemania = pygame.image.load(r'Recursos\Banderas\Alemania.png')
+alemania = pygame.transform.scale(alemania, (25,25))
 
 # Fuentes
 fuente = pygame.font.SysFont('consolas', 20)
@@ -69,6 +80,7 @@ siguiente = False
 activo = False
 flag = True
 aplicar_filtro = False
+mostrar_nombres = False 
 
 while flag:
     lista_eventos = pygame.event.get()
@@ -85,7 +97,10 @@ while flag:
                 elif evento.key == pygame.K_RETURN:
                     if pokemon_actual.nombre.lower() == texto.lower():
                         mostrar_silueta = False
+                        mostrar_nombres = True
                         animacion.iniciar(tiempo_actual)
+                    else:
+                        pass
                     texto = ""
                 else:
                     texto += evento.unicode
@@ -110,6 +125,7 @@ while flag:
         if lista_pokemons_filtrada:
             pokemon_actual = random.choice(lista_pokemons_filtrada)
         mostrar_silueta = True
+        mostrar_nombres = False
         siguiente = False
 
     if not mostrar_silueta and tiempo_actual - animacion.tiempo_inicial >= animacion.tiempo_maximo:
@@ -117,6 +133,7 @@ while flag:
         mostrar_silueta = True 
         animacion.tiempo_inicial = 0
         siguiente = True
+        mostrar_nombres = False
 
     generaciones_seleccionadas = botones_generaciones.obtener_generaciones_seleccionadas()
 
@@ -136,11 +153,20 @@ while flag:
     ventana.blit(texto_dificultad, (498, 690))
 
 
+    # Pruebas
     nombre_pokemon = fuente.render(f'{pokemon_actual.nombre} {pokemon_actual.generacion}', True, NEGRO)
     ventana.blit(nombre_pokemon, (50, 50))
 
     animacion.actualizar(tiempo_actual)
     animacion.dibujar(ventana, (input_rect.right + 50, input_rect.y + (input_rect.height - 90) // 2))
+ 
+    if mostrar_nombres:
+        pokemon_actual.nombres(lista_nombre, fuente, NEGRO, ventana)
+        ventana.blit(reino_unido, (0,168))
+        ventana.blit(francia, (0,218))
+        ventana.blit(italia, (0,268))
+        ventana.blit(alemania, (0,318))
+
 
     pygame.display.update()
 

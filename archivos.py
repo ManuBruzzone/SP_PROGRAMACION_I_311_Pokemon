@@ -21,3 +21,23 @@ def cargar_lista_pokemons(path):
             lista.append(pokemon)
 
     return lista
+
+def cargar_nombre_pokemons(path):
+    lista = []
+
+    with open(path, 'r') as archivo:
+        archivo.readline()
+
+        for line in archivo:
+            lectura = re.split(',|\n', line)
+            nombre = lectura[0]
+            name_en = lectura[1]
+            name_fr = lectura[2]
+            name_it = lectura[3]
+            name_de = lectura[4]
+
+            nombre_pokemon = (nombre, name_en, name_fr, name_it, name_de)
+
+            lista.append(nombre_pokemon)
+
+    return lista

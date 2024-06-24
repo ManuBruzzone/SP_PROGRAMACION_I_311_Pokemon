@@ -10,7 +10,6 @@ class Pokemon:
         self.generacion = generacion
         self.audio = audio
 
-
     def dibujar(self, pantalla, mostrar_silueta, dificultad):
         silueta = self.imagen.copy()
         silueta.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
@@ -30,7 +29,30 @@ class Pokemon:
                 pantalla.blit(silueta, self.rectangulo)
             else:
                 pantalla.blit(self.imagen, self.rectangulo)
+    
 
+    def nombres(self, lista_nombres, fuente, color, pantalla):
+        encontrado = False
+        for nombre in lista_nombres:
+            if self.nombre == nombre[0]:
+                name_en = nombre[1]
+                name_fr = nombre[2]
+                name_it = nombre[3]
+                name_de = nombre[4]
+                encontrado = True
+                break
+
+        if encontrado:
+            texto_1 = fuente.render(name_en, True, color)
+            texto_2 = fuente.render(name_fr, True, color)
+            texto_3 = fuente.render(name_it, True, color)
+            texto_4 = fuente.render(name_de, True, color)
+
+            pantalla.blit(texto_1, (30, 170))
+            pantalla.blit(texto_2, (30, 220))
+            pantalla.blit(texto_3, (30, 270))  
+            pantalla.blit(texto_4, (30, 320))
+ 
 
     def filtrar_pokemons(self, lista_pokemons, generaciones):
         pokemons_filtrados = []
