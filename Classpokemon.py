@@ -32,26 +32,28 @@ class Pokemon:
     
 
     def nombres(self, lista_nombres, fuente, color, pantalla):
-        encontrado = False
         for nombre in lista_nombres:
+            name_en = self.nombre
+            name_fr = self.nombre
+            name_it = self.nombre
+            name_de = self.nombre
+
             if self.nombre == nombre[0]:
                 name_en = nombre[1]
                 name_fr = nombre[2]
                 name_it = nombre[3]
                 name_de = nombre[4]
-                encontrado = True
                 break
 
-        if encontrado:
-            texto_1 = fuente.render(name_en, True, color)
-            texto_2 = fuente.render(name_fr, True, color)
-            texto_3 = fuente.render(name_it, True, color)
-            texto_4 = fuente.render(name_de, True, color)
+        texto_1 = fuente.render(name_en, True, color)
+        texto_2 = fuente.render(name_fr, True, color)
+        texto_3 = fuente.render(name_it, True, color)
+        texto_4 = fuente.render(name_de, True, color)
 
-            pantalla.blit(texto_1, (30, 170))
-            pantalla.blit(texto_2, (30, 220))
-            pantalla.blit(texto_3, (30, 270))  
-            pantalla.blit(texto_4, (30, 320))
+        pantalla.blit(texto_1, (30, 170))
+        pantalla.blit(texto_2, (30, 220))
+        pantalla.blit(texto_3, (30, 270))  
+        pantalla.blit(texto_4, (30, 320))
  
 
     def filtrar_pokemons(self, lista_pokemons, generaciones):

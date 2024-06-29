@@ -48,7 +48,7 @@ fuente_titulo = pygame.font.SysFont('Arial', 40)
 
 # Input
 input_rect = pygame.Rect(0, 0, 200, 32)
-input_rect.center = (ANCHO_VENTANA // 2, ALTO_VENTANA // 1.7 + 1.7)
+input_rect.center = (ANCHO_VENTANA // 2, ALTO_VENTANA // 1.7 + 1)
 texto = ''
 
 # Textos
@@ -63,16 +63,17 @@ animacion = Animacion(ruta_frames, 3000)
 # Botones
 botones_generaciones = Botones()
 botones_dificultad = Botones()
-botones_generaciones.crear_botones_generacion(75, 45, 3, 3, (50, 480), 1)
-botones_dificultad.crear_botones_dificultad(110, 45, 3, 1, (500, 480), 1)
+botones_generaciones.crear_botones_generacion(75, 45, 3, 3, (50, 550), 1)
+botones_dificultad.crear_botones_dificultad(110, 45, 3, 1, (500, 550), 1)
 
 # Seleccionar Pokémon inicial
 pokemon_actual = random.choice(lista_pokemons)
 
-# Inicializar generaciones seleccionadas y lista filtrada
-generaciones_seleccionadas = botones_generaciones.obtener_generaciones_seleccionadas()
-lista_pokemons_filtrada = pokemon_actual.filtrar_pokemons(lista_pokemons, generaciones_seleccionadas)
-pokemon_actual = random.choice(lista_pokemons_filtrada) if lista_pokemons_filtrada else None
+# Contadores
+contador_tiempo = 0
+contador_pokemons = 0
+tiempo_inicial = pygame.time.get_ticks()
+aciertos = 0
 
 # Banderas
 mostrar_silueta = True
@@ -81,15 +82,11 @@ activo = False
 flag = True
 aplicar_filtro = False
 mostrar_nombres = False 
-respuestas_correctas = 0
-mejor_racha = 0
-tiempo_inicio_respuesta = 0
-tiempo_fin_respuesta = 0
 
 while flag:
     lista_eventos = pygame.event.get()
     tiempo_actual = pygame.time.get_ticks()
-    tiempo_inicio_respuesta = pygame.time.get_ticks()
+    contador_tiempo = (tiempo_actual - tiempo_inicial)// 1000
 
     for evento in lista_eventos:
         if evento.type == pygame.QUIT:
@@ -103,11 +100,16 @@ while flag:
                     if pokemon_actual.nombre.lower() == texto.lower():
                         mostrar_silueta = False
                         mostrar_nombres = True
-                        respuestas_correctas += 1
-                        tiempo_fin_respuesta = pygame.time.get_ticks()
-                        if respuestas_correctas > mejor_racha:
-                            mejor_racha = respuestas_correctas
                         animacion.iniciar(tiempo_actual)
+                        contador_pokemons += 1
+                        tiempo_inicial = tiempo_actual + 3000
+                        aciertos += 1
+                    elif pokemon_actual.nombre.lower() != texto.lower():
+                        mostrar_silueta = False
+                        mostrar_nombres = True
+                        tiempo_inicial = tiempo_actual + 3000
+                        aciertos = 0
+                        guardar_datos_json('./estadisticas.json',datos_a_guardar)
                     else:
                         pass
                     texto = ""
@@ -145,8 +147,6 @@ while flag:
         siguiente = True
         mostrar_nombres = False
 
-    generaciones_seleccionadas = botones_generaciones.obtener_generaciones_seleccionadas()
-
     ventana.fill(AZUL_CLARO)
 
     botones_generaciones.dibujar_botones_generacion(ventana, NEGRO, fuente)
@@ -155,28 +155,15 @@ while flag:
     
     pokemon_actual.dibujar(ventana, mostrar_silueta, dificultad_seleccionada)
 
-    if tiempo_inicio_respuesta > 0 and tiempo_fin_respuesta > 0:
-        tiempo_respuesta = tiempo_fin_respuesta - tiempo_inicio_respuesta
-        tiempo_respuesta_segundos = tiempo_respuesta / 1000  # Convertir a segundos
-        texto_tiempo = fuente.render(f'Tiempo de respuesta: {tiempo_respuesta_segundos:.2f} segundos', True, NEGRO)
-        ventana.blit(texto_tiempo, (50, 100))
-
-    margen_derecho = 10
-    cuadro_ancho = 150
-    cuadro_alto = 60
-    pygame.draw.rect(ventana, BLANCO, (ANCHO_VENTANA - margen_derecho - cuadro_ancho, margen_derecho, cuadro_ancho, cuadro_alto))
-
     pygame.draw.rect(ventana, BLANCO, input_rect)
     superficie_texto = fuente.render(texto, True, NEGRO)
+    contador_aciertos = fuente.render(f'{aciertos}/10', True, NEGRO)
     ventana.blit(superficie_texto, (input_rect.x + 5, input_rect.y + (input_rect.height - superficie_texto.get_height()) // 2))
     ventana.blit(texto_superior, (ANCHO_VENTANA // 2 - texto_superior.get_width() // 2, 50))
-    ventana.blit(texto_generaciones, (110, 690))
-    ventana.blit(texto_dificultad, (498, 690))
+    ventana.blit(texto_generaciones, (110, 515))
+    ventana.blit(texto_dificultad, (498, 515))
+    ventana.blit(contador_aciertos, (ANCHO_VENTANA // 2 - 20, ALTO_VENTANA // 2 + 85))
 
-
-
-    texto_respuestas_correctas = fuente.render(f'Streak: {respuestas_correctas}', True, NEGRO)
-    texto_mejor_racha = fuente.render(f'Best: {mejor_racha}', True, NEGRO)
 
     # Pruebas
     nombre_pokemon = fuente.render(f'{pokemon_actual.nombre} {pokemon_actual.generacion}', True, NEGRO)
@@ -192,6 +179,16 @@ while flag:
         ventana.blit(italia, (0,268))
         ventana.blit(alemania, (0,318))
 
+    texto_contador_tiempo = fuente.render(f'Time: {contador_tiempo}s', True, NEGRO)
+    texto_contador_pokemons = fuente.render(f'Pokemons: {contador_pokemons}', True, NEGRO)
+    ventana.blit(texto_contador_tiempo, (ANCHO_VENTANA - texto_contador_tiempo.get_width() - 10, 10))
+    ventana.blit(texto_contador_pokemons, (ANCHO_VENTANA - texto_contador_pokemons.get_width() - 10, 40))
+
+    datos_a_guardar = {
+    "aciertos": aciertos,
+    "contador_tiempo": contador_tiempo,
+    "contador_pokemons": contador_pokemons,
+    }
 
     pygame.display.update()
 

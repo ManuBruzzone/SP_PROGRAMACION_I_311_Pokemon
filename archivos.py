@@ -1,5 +1,7 @@
 from Classpokemon import *
 import re
+import datetime
+import json
 
 def cargar_lista_pokemons(path):
     lista = []
@@ -41,3 +43,7 @@ def cargar_nombre_pokemons(path):
             lista.append(nombre_pokemon)
 
     return lista
+
+def guardar_datos_json(path,datos):
+    with open(path, 'w') as archivo:
+            json.dump(datos, archivo, indent = 4)
