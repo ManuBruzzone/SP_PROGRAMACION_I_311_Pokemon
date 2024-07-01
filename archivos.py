@@ -1,6 +1,6 @@
 from Classpokemon import *
 import re
-import datetime
+from funciones import *
 import json
 
 def cargar_lista_pokemons(path):
@@ -44,6 +44,46 @@ def cargar_nombre_pokemons(path):
 
     return lista
 
-def guardar_datos_json(path,datos):
+def guardar_estadisticas(path, aciertos, lista_tiempos):
+    estadisticas = leer_estadisticas(path)
+    mejor_tiempo, peor_tiempo, tiempo_promedio = calcular_estadisticas(lista_tiempos)
+    datos_a_guardar = {
+        "aciertos": aciertos,
+        "mejor_tiempo": mejor_tiempo,
+        "peor_tiempo": peor_tiempo,
+        "tiempo_promedio": tiempo_promedio,
+        "tiempos": lista_tiempos
+    }
+    estadisticas.append(datos_a_guardar)
     with open(path, 'w') as archivo:
-            json.dump(datos, archivo, indent = 4)
+            json.dump(estadisticas, archivo, indent = 4)
+
+def leer_estadisticas(path):
+    diccionario = []
+    try:
+        with open(path, 'r') as archivo:
+            diccionario = json.load(archivo)
+    except:
+        print('Se creo el archivo')
+    
+    return diccionario
+
+def record_aciertos(path, aciertos):
+    try:
+        with open(path, 'r+') as archivo:
+            contenido = archivo.read()
+            if contenido:
+                record_aciertos = int(contenido)
+            else:
+                record_aciertos = 0
+            
+            if aciertos > record_aciertos:
+                archivo.seek(0)
+                archivo.write(str(aciertos))
+    except:
+        print('El archivo no existe. Se creará uno nuevo.')
+        with open(path, 'w') as archivo:
+            archivo.write(str(aciertos))
+        record_aciertos = aciertos
+    
+    return record_aciertos

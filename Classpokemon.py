@@ -29,7 +29,7 @@ class Pokemon:
                 pantalla.blit(silueta, self.rectangulo)
             else:
                 pantalla.blit(self.imagen, self.rectangulo)
-    
+
 
     def nombres(self, lista_nombres, fuente, color, pantalla):
         for nombre in lista_nombres:
