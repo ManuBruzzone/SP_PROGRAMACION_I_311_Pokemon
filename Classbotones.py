@@ -16,6 +16,9 @@ class Botones:
         self.color_botones_dificultad = {}
         self.generaciones_seleccionadas = []
         self.dificultades_seleccionadas = []
+        self.boton = None
+        self.color_boton = ROJO
+        self.texto_boton = ""
 
 
     def crear_botones_generacion(self, ancho_boton, alto_boton, filas, columnas, pos_inicial, espaciado):
@@ -51,7 +54,11 @@ class Botones:
             
         self.botones_dificultad = matriz_botones_generacion
         self.medidas_botones_fondo = pygame.Rect(pos_inicial[0] -10, pos_inicial[1] -10, (columnas * (ancho_boton + espaciado) - espaciado) + 20, (filas * (alto_boton + espaciado) - espaciado) + 20)
-
+    
+    def crear_boton(self, x, y, ancho, alto, color, texto):
+        self.boton = pygame.Rect(x, y, ancho, alto)
+        self.color_boton = color
+        self.texto_boton = texto
 
     def dibujar_botones_generacion(self, ventana, color_texto, fuente):
         if self.medidas_botones_fondo:
@@ -78,6 +85,12 @@ class Botones:
                 pygame.draw.rect(ventana, color, boton_rect)
                 texto = fuente.render(texto_dificultad, True, color_texto)
                 ventana.blit(texto, (boton_rect.x + (boton_rect.width - texto.get_width()) // 2, boton_rect.y + (boton_rect.height - texto.get_height()) // 2))
+
+    def dibujar_boton(self, ventana, fuente):
+        if self.boton:
+            pygame.draw.rect(ventana, self.color_boton, self.boton)
+            texto = fuente.render(self.texto_boton, True, BLANCO)
+            ventana.blit(texto, (self.boton.x + (self.boton.width - texto.get_width()) // 2, self.boton.y + (self.boton.height - texto.get_height()) // 2))
 
     def actualizar_color_boton(self, pos):
         i_gen = 0
@@ -113,3 +126,10 @@ class Botones:
     
     def obtener_dificutlad_seleccioanda(self):
         return self.dificultades_seleccionadas
+    
+    def boton_clickeado(self, pos):
+        clickeado = False
+        if self.boton and self.boton.collidepoint(pos):
+            clickeado = True
+        
+        return clickeado 

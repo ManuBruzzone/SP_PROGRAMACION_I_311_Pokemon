@@ -63,8 +63,12 @@ animacion = Animacion(ruta_frames, 3000)
 # Botones
 botones_generaciones = Botones()
 botones_dificultad = Botones()
+boton_salir = Botones()
+boton_reiniciar = Botones()
 botones_generaciones.crear_botones_generacion(75, 45, 3, 3, (50, 550), 1)
 botones_dificultad.crear_botones_dificultad(110, 45, 3, 1, (500, 550), 1)
+boton_salir.crear_boton(ANCHO_VENTANA - 250, ALTO_VENTANA // 2 - 100, 200, 50, NEGRO, "Salir")
+boton_reiniciar.crear_boton(ANCHO_VENTANA - 250, ALTO_VENTANA // 2 - 170, 200, 50, NEGRO, "Volver a jugar")
 
 # Seleccionar Pokémon inicial
 pokemon_actual = random.choice(lista_pokemons)
@@ -130,7 +134,21 @@ while flag:
                     texto += evento.unicode
 
         elif evento.type == pygame.MOUSEBUTTONDOWN:
-            if input_rect.collidepoint(evento.pos):
+            if boton_salir.boton_clickeado(evento.pos):
+                flag = False
+            elif boton_reiniciar.boton_clickeado(evento.pos):
+                contador_tiempo = 0
+                contador_pokemons = 0
+                tiempo_inicial = pygame.time.get_ticks()
+                aciertos = 0
+                lista_tiempos = []
+                pokemons_adivinados = []
+                tiempo_ultima_respuesta = 0
+                aciertos = 0
+                juego = True
+                juego_terminado = False
+                print('reiniciar')
+            elif input_rect.collidepoint(evento.pos):
                 activo = not activo
             else:
                 activo = False
@@ -178,8 +196,6 @@ while flag:
         ventana.blit(texto_generaciones, (110, 515))
         ventana.blit(texto_dificultad, (498, 515))
         ventana.blit(contador_aciertos, (ANCHO_VENTANA // 2 - 20, ALTO_VENTANA // 2 + 85))
-
-
         # Pruebas
         nombre_pokemon = fuente.render(f'{pokemon_actual.nombre} {pokemon_actual.generacion}', True, NEGRO)
         ventana.blit(nombre_pokemon, (50, 50))
@@ -206,10 +222,10 @@ while flag:
         ventana.blit(texto_promedio_actual, (2, 22))
 
         texto_aciertos = fuente.render(f'Aciertos: {aciertos}', True, NEGRO)
-        ventana.blit(texto_aciertos, (450, 22))
+        ventana.blit(texto_aciertos, (420, 22))
 
         texto_record_aciertos = fuente.render(f'Record Aciertos: {max_aciertos}', True, NEGRO)
-        ventana.blit(texto_record_aciertos, (450, 2))
+        ventana.blit(texto_record_aciertos, (420, 2))
 
     else:
         if juego_terminado == False:
@@ -241,6 +257,9 @@ while flag:
             texto_pokemon_adivinado = fuente.render(f'{pokemon["nombre"]} (Generacion {pokemon["generacion"]})', True, NEGRO)
             ventana.blit(texto_pokemon_adivinado, (50, y))
             y += 30
+
+        boton_salir.dibujar_boton(ventana,fuente)
+        boton_reiniciar.dibujar_boton(ventana,fuente)
 
     pygame.display.update()
 
