@@ -193,8 +193,8 @@ while banderas['flag']:
         ventana.blit(fuente.render('Difficulty', True, NEGRO), (498, 515))
         ventana.blit(contador_aciertos, (ANCHO_VENTANA // 2 - 20, ALTO_VENTANA // 2 + 85))
 
-        nombre_pokemon = fuente.render(f'{pokemon_actual.nombre} {pokemon_actual.generacion}', True, NEGRO)
-        ventana.blit(nombre_pokemon, (50, 50))
+        # nombre_pokemon = fuente.render(f'{pokemon_actual.nombre} {pokemon_actual.generacion}', True, NEGRO)
+        # ventana.blit(nombre_pokemon, (50, 50))
 
         animacion.actualizar(tiempo_actual)
         animacion.dibujar(ventana, (input_rect.right + 50, input_rect.y + (input_rect.height - 90) // 2))

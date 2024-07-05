@@ -1,8 +1,8 @@
-# Proyecto "¿Quién es ese Pokémon?" con Pygame
+# Proyecto "Who's That Pokemon??" con Pygame
 
 ## Visión general
 
-"¿Quién es ese Pokémon?" es un juego desarrollado en Python inspirado en el popular segmento del mismo nombre de la serie animada Pokémon. Los jugadores deben identificar correctamente a Pokémon a partir de una imagen de su silueta mostrada en pantalla. El juego ofrece opciones para seleccionar generaciones específicas de Pokémon y ajustar los niveles de dificultad de las imágenes para aumentar la variedad y desafío del juego.
+"Who's That Pokemon??" es un juego desarrollado en Python inspirado en el popular segmento del mismo nombre de la serie animada Pokémon. Los jugadores deben identificar correctamente a Pokémon a partir de una imagen de su silueta mostrada en pantalla. El juego ofrece opciones para seleccionar generaciones específicas de Pokémon y ajustar los niveles de dificultad de las imágenes para aumentar la variedad y desafío del juego.
 
 ## Características
 
@@ -48,6 +48,8 @@ El juego incluye 1119 Pokémon obtenidos de PokeAPI, asegurando una amplia varie
    - Observa la silueta y escribe tu respuesta.
 4. **Seguir el Rendimiento**:
    - Mantén un seguimiento de estadísticas como tu mejor tiempo, número de respuestas correctas, y más.
+
+![Pantalla del Juego](Recursos/Imagen_readme/Pantalla_Juego.png)
 
 ## Conclusión
 
