@@ -1,4 +1,4 @@
-# Who's That Pokemon? - Proyecto con Pygame
+# Proyecto "¿Quién es ese Pokémon?" con Pygame
 
 ## Visión general
 
@@ -12,7 +12,7 @@
   - **Niveles de Dificultad**: Ajusta la dificultad de la silueta para adivinar (fácil, medio, difícil).
 - **Interfaz Interactiva**: Utiliza Pygame para gráficos e interacción con el usuario.
 - **Estadísticas y Registros**: Registra el rendimiento del jugador con estadísticas como mejor tiempo, peor tiempo, tiempo promedio y número más alto de respuestas correctas.
-- **Integración de API**: Utiliza PokeAPI para obtener imágenes, nombres y generaciones de Pokémon.
+- **Integración de API**: Utiliza informacion de la PokeAPI para obtener imágenes, nombres y generaciones de Pokémon.
 
 ## Estructura del Proyecto
 
@@ -34,7 +34,6 @@ El proyecto está organizado en varios módulos y estructuras de archivos:
 
 - **Python**: Lenguaje de programación utilizado para la lógica del juego y la interfaz.
 - **Pygame**: Biblioteca de Python para desarrollar aplicaciones multimedia como juegos.
-- **PokeAPI**: API utilizada para obtener datos de Pokémon, incluyendo imágenes, nombres y generaciones.
 
 ## Total de Pokémon Disponibles
 
