@@ -85,6 +85,8 @@ animacion = Animacion(ruta_frames, 3000)
 
 # Seleccionar Pokémon inicial
 pokemon_actual = random.choice(lista_pokemons)
+print(pokemon_actual.nombre)
+print(pokemon_actual.generacion)
 
 # Configuración inicial
 contadores['max_aciertos'] = record_aciertos('./record_aciertos.txt', contadores['aciertos'])
@@ -164,6 +166,8 @@ while banderas['flag']:
 
             if lista_pokemons_filtrada:
                 pokemon_actual = random.choice(lista_pokemons_filtrada)
+                print(pokemon_actual.nombre)
+                print(pokemon_actual.generacion)
             banderas['mostrar_silueta'] = True
             banderas['mostrar_nombres'] = False
             banderas['siguiente'] = False
