@@ -3,7 +3,16 @@ import re
 from funciones import *
 import json
 
-def cargar_lista_pokemons(path):
+
+def cargar_lista_pokemons(path: str) -> list:
+    """Carga una lista de objetos Pokemon desde un archivo.
+
+    Args:
+        path (str): Ruta del archivo CSV.
+
+    Returns:
+        list: Lista de objetos Pokemon.
+    """
     lista = []
 
     with open(path, 'r') as archivo:
@@ -24,7 +33,16 @@ def cargar_lista_pokemons(path):
 
     return lista
 
-def cargar_nombre_pokemons(path):
+
+def cargar_nombre_pokemons(path: str) -> list:
+    """Carga una lista de nombres de Pokemon en diferentes idiomas desde un archivo.
+
+    Args:
+        path (str): Ruta del archivo CSV.
+
+    Returns:
+        list: Lista de nombres de Pokemon en diferentes idiomas.
+    """
     lista = []
 
     with open(path, 'r') as archivo:
@@ -44,7 +62,15 @@ def cargar_nombre_pokemons(path):
 
     return lista
 
-def guardar_estadisticas(path, aciertos, lista_tiempos):
+
+def guardar_estadisticas(path: str, aciertos: int, lista_tiempos: list):
+    """Guarda las estadísticas del juego en un archivo JSON.
+
+    Args:
+        path (str): Ruta del archivo JSON.
+        aciertos (int): Número de aciertos.
+        lista_tiempos (list): Lista de tiempos.
+    """
     estadisticas = leer_estadisticas(path)
     mejor_tiempo, peor_tiempo, tiempo_promedio = calcular_estadisticas(lista_tiempos)
     datos_a_guardar = {
@@ -58,7 +84,16 @@ def guardar_estadisticas(path, aciertos, lista_tiempos):
     with open(path, 'w') as archivo:
             json.dump(estadisticas, archivo, indent = 4)
 
-def leer_estadisticas(path):
+
+def leer_estadisticas(path: str) -> list[dict]:
+    """Lee las estadísticas del juego desde un archivo JSON.
+
+    Args:
+        path (str): Ruta del archivo JSON.
+
+    Returns:
+        list[dict]: Lista de diccionarios con las estadísticas del juego.
+    """
     diccionario = []
     try:
         with open(path, 'r') as archivo:
@@ -68,7 +103,17 @@ def leer_estadisticas(path):
     
     return diccionario
 
-def record_aciertos(path, aciertos):
+
+def record_aciertos(path: str, aciertos: int) -> int:
+    """Registra el número máximo de aciertos en un archivo.
+
+    Args:
+        path (str): Ruta del archivo.
+        aciertos (int): Número de aciertos.
+
+    Returns:
+        int: El récord de aciertos.
+    """
     try:
         with open(path, 'r+') as archivo:
             contenido = archivo.read()
